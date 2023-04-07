@@ -7,24 +7,27 @@ import api from './services/api';
 function App() {
 
   const [input, setInput] = useState('');
+  const[cep, setCep] = useState({});
 
 
   const inputChangeHandler = (event) => {
     setInput(event.target.value)
   }
 
-  async function handleSearch() { /* Eu uso async pra transformar essa função em assincrona, porque como vou em outro site, pode demorar */
-    if (input ===''){
+  async function handleSearch(){ /* Eu uso async pra transformar essa função em assincrona, porque como vou em outro site, pode demorar */
+    if(input ===''){
       alert("Preencha algum CEP")
       return;
     }
 
     try{
-      const response = await api.get('${input}/json'); /*get é o tipo de função que quero, trazer informações pra ca; /json é o formato que eu quero trazer*/
-      console.log(response)
+      const response = await api.get(`${input}/json`); /*get é o tipo de função que quero, trazer informações pra ca; /json é o formato que eu quero trazer*/
+      setCep(response.data)
+      setInput('');
 
     }catch{
       alert("CEP invalido");
+      setInput('') /*pra limpar o input*/
     }
 
   }
@@ -46,12 +49,12 @@ function App() {
       </div>
 
       <main className='main'>
-        <h2>CEP: 79003222</h2>
+        <h2>CEP: {cep.cep}</h2>
         
-        <span>Rua teste algum</span>
-        <span>Complemento: algum complemento</span>
-        <span>Vila Rosa</span>
-        <span>Campo Grande- SP</span>
+        <span>{cep.logradouro}</span>
+        <span>Complemento: {cep.complemento}</span>
+        <span>{cep.bairro}</span>
+        <span>{cep.localidade}- {cep.uf}</span>
 
       </main>
 
