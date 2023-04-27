@@ -33,7 +33,7 @@ function App() {
   }
 
   return (
-    <div className="Container">
+    <div className="Container"> 
       <h1 className="title">Buscador CEP</h1>
       <div className="containerInput">
         <input 
